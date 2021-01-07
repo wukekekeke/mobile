@@ -27,7 +27,7 @@
     <!-- 底部 -->
     <!-- 需要添加route开启路由模式，配合内部的to -->
     <!--replace 在跳转时替换当前页面历史 -->
-    <van-tabbar router v-model="active" fixed>
+    <van-tabbar route v-model="active" fixed>
       <van-tabbar-item icon="home-o" replace to='/'>首页</van-tabbar-item>
       <van-tabbar-item icon="search" replace to='/question'>问答</van-tabbar-item>
       <van-tabbar-item icon="fire-o" replace to='/video'>视频</van-tabbar-item>
