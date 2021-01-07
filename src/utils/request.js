@@ -7,9 +7,10 @@ const http = axios.create({
 
 // 添加请求拦截器
 // 所有的请求在发送出去之前都会经过axios的请求拦截器， 在请求拦截器中统一携带 token
-axios.interceptors.request.use(function (config) {
+http.interceptors.request.use(function (config) {
   // config：请求的配置信息
   // 在发起请求前，先拿到token
+  console.log('请求拦截器')
   const token = store.state.user.tokenInfo.token
   // 有token才携带
   if (token) {

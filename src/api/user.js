@@ -16,6 +16,7 @@ import http from '@/utils/request.js'
 
 // 用户登录
 export const reqLogin = (mobile, code) => {
+  // console.log('4444')
   return http({
     method: 'post',
     url: '/v1_0/authorizations',

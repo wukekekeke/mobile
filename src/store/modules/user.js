@@ -7,11 +7,15 @@
 // 1.用户登陆成功之后，保存token到本地存储localstorage
 // 2.在vuex初始化时，从本地中取token
 
+import { setToken, getToken } from '@/utils/storage.js'
+
 const state = {
   // 存放关于token数据：token，refresh token
   // 这里的初始值, 不能为空, 需要从本地的localStorage中拿，否则页面一刷新，token会回到初始值（空）
   // localStorage中存的是JSON字符串，需要解析
-  tokenInfo: JSON.parse(localStorage.getItem('tokenInfo'))
+  // tokenInfo: JSON.parse(localStorage.getItem('tokenInfo'))
+  // 以上取token的方法封装到storage.js中了
+  tokenInfo: getToken()
 }
 
 const mutations = {
@@ -19,7 +23,9 @@ const mutations = {
     state.tokenInfo = tokenObj
     // 拿到token中需要往本地存一份，持久存储
     // localStorage中存的是JSON字符串，需要转义
-    localStorage.setItem('tokenInfo', JSON.stringify(tokenObj))
+    // localStorage.setItem('tokenInfo', JSON.stringify(tokenObj))
+    // 以上存token的方法封装到storage.js中了
+    setToken(tokenObj)
   }
 }
 
