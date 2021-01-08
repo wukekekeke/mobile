@@ -1,8 +1,21 @@
 import axios from 'axios'
 import store from '@/store'
+import JSONbig from 'json-bigint'
 const http = axios.create({
   baseURL: 'http://toutiao-app.itheima.net/', // 配置基地址
-  timeout: 5000 // 请求超时时间
+  timeout: 5000, // 请求超时时间
+  // 对于响应数据做格式处理
+  transformResponse: [function (data) {
+    // 对 data 进行任意转换处理
+    // data => 原始的后台返回的 json 字符串数据
+    // 这里是丢失精度的源头： 在JSON.parse中丢失了精度，需要换成JSONbig.parse
+    try {
+      return JSONbig.parse(data)
+    } catch {
+      // 如果解析不了, 说明不是json格式, 原样输出
+      return data
+    }
+  }]
 })
 
 // 添加请求拦截器
