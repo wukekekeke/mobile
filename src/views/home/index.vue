@@ -1,25 +1,36 @@
 <template>
   <div class="home">
     <!-- tab栏部分 -->
-  <van-tabs v-model="active">
-    <van-tab v-for="item in channels" :key="item.id" :title="item.name">
-      <!-- 每个面板下, 都有自己的 article-list, 所以互相不影响 -->
-      <!-- 父传子, 将频道数据传递进去 -->
-      <article-list :channel='item'></article-list>
-    </van-tab>
-  </van-tabs>
+    <van-tabs v-model="active">
+      <van-tab v-for="item in channels" :key="item.id" :title="item.name">
+        <!-- 每个面板下, 都有自己的 article-list, 所以互相不影响 -->
+        <!-- 父传子, 将频道数据传递进去 -->
+        <!-- 方法1：通过ref找到对应的文章，进行删除， -->
+         <!-- this.$refs.articleList 如果同一个ref加给了多个组件, 将来拿到的是一个数组 -->
+        <article-list :channel='item' @show-more="handleShowMore" ref='articleList'></article-list>
+      </van-tab>
+    </van-tabs>
+
+    <!-- 弹层 -->
+    <van-popup v-model="showMore" :style="{ width: '60%' }">
+      <more-action @dislike='dislike' ></more-action>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { reqGetChannels } from '@/api/channel.js'
 import ArticleList from './components/articleList.vue'
+import MoreAction from './components/moreAction.vue'
+import { reqDislikeArticles } from '@/api/articles.js'
 export default {
   name: 'home',
   data () {
     return {
       active: 0,
-      channels: []
+      channels: [],
+      showMore: false,
+      ArticleId: null
     }
   },
   methods: {
@@ -28,13 +39,38 @@ export default {
       // console.log(res)
       this.channels = res.data.data.channels
       // console.log(this.channels)
+    },
+    handleShowMore (id) {
+      this.showMore = true
+      this.ArticleId = id
+      // console.log(this.ArticleId)
+    },
+    async dislike () {
+      console.log('dislike', this.ArticleId)
+      // 1. 调用后端接口, 告诉后台, 这个文章我不感兴趣
+      await reqDislikeArticles(this.ArticleId)
+      // 2. 关闭弹出层
+      this.showMore = false
+      // 3. 将用户点击的那个文章删除
+      // 方法1，this.$refs.articleList通过拿到文章下标，并通过调用articleList组件中的delListById方法
+      // this.$refs.articleList[this.active].delListById(this.ArticleId)
+      // 方法2，事件总线，在父组件中发布事件，子组件中监听事件，并做出反应
+      // 父组件发布事件
+      // this.$eventBus.$emit('自定义事件名', 参数...)
+      const emitObj = {
+        ArticleId: this.ArticleId,
+        channelId: this.channels[this.active].id
+      }
+      this.$eventBus.$emit('del-article', emitObj)
+      // console.log(emitObj)
     }
   },
   created () {
     this.loadChannels()
   },
   components: {
-    ArticleList
+    ArticleList,
+    MoreAction
   }
 }
 </script>

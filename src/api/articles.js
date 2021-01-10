@@ -16,3 +16,14 @@ export const reqGetArticles = (channel_id, timestamp) => {
     }
   })
 }
+
+// 对文章不喜欢
+export const reqDislikeArticles = (articleId) => {
+  return http({
+    method: 'post',
+    url: '/v1_0/article/dislikes',
+    data: {
+      target: articleId
+    }
+  })
+}
