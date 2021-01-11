@@ -23,7 +23,10 @@
 
     <!-- 底部的弹层（频道管理） -->
     <van-action-sheet v-model="showChannelEdit" title="频道管理">
-      <channel-edit :active='active' @update-curchannel='updateCurchannel'></channel-edit>
+      <channel-edit
+        :active='active' @update-curchannel='updateCurchannel'
+        @update-active='updateActive'>
+      </channel-edit>
     </van-action-sheet>
   </div>
 
@@ -112,6 +115,10 @@ export default {
       this.showChannelEdit = false
       // 2. 切换到当前频道(更新下标active)
       this.active = curchannel
+    },
+    // 修改高亮
+    updateActive (index) {
+      this.active = index
     },
     ...mapActions('channels', ['setChannelsAsync', 'setAllChannelsAsync'])
   },

@@ -14,7 +14,7 @@
            <!-- 在编辑状态时，删除按钮显示 -->
            <!-- 注意：如果是推荐, 不需要显示删除按钮 -->
            <!-- .stop 阻止事件冒泡 -->
-          <van-icon name="cross" class="btn" @click.stop="delChannel(item)" v-show="editing&&index!==0"></van-icon>
+          <van-icon name="cross" class="btn" @click.stop="delChannel(item,index)" v-show="editing&&index!==0"></van-icon>
         </van-grid-item>
       </van-grid>
     </div>
@@ -22,7 +22,7 @@
     <div class="channel">
       <van-cell title="可选频道" :border="false"></van-cell>
       <van-grid>
-        <van-grid-item v-for="item in optionalChannels" :key="item.id" @click="clickAddChannel(item)">
+        <van-grid-item v-for="item in optionalChannels" :key="item.id" @click="addChannel(item)">
         <span >{{item.name}}</span>
         </van-grid-item>
       </van-grid>
@@ -57,17 +57,25 @@ export default {
     },
 
     // 添加频道
-    async clickAddChannel (addchannel) {
+    async addChannel (addchannel) {
       // 1. 将选择 channel 数据往我的频道 channel 中添加 ( 通过提交mutation，操作vuex中的数据)
       this.addChannels(addchannel)
 
       this.resetChannel()
     },
     // 删除频道
-    delChannel (delChannel) {
+    delChannel (delChannel, index) {
+      // 进行删除后，高亮效果的优化
+      // 删除的是当前项，高亮回到推荐
+      if (index === this.active) {
+        this.$emit('update-active', 0)
+      }
+      // 删除的是前面的项, 需要将 this.active - 1
+      if (index < this.active) {
+        this.$emit('update-active', this.active - 1)
+      }
       // 1. 操作vuex中的数据，从我的频道中删除
       this.delChannels(delChannel)
-
       this.resetChannel()
     },
 
