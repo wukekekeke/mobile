@@ -25,7 +25,7 @@ http.interceptors.request.use(function (config) {
   // 在发起请求前，先拿到token
   console.log('请求拦截器')
   const token = store.state.user.tokenInfo.token
-  // 有token才携带
+  // 有token才携带，注意：Bearer 后面带有空格
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }

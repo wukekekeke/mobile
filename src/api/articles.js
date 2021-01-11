@@ -27,3 +27,15 @@ export const reqDislikeArticles = (articleId) => {
     }
   })
 }
+
+// 举报文章
+export const reqReportArticles = (articleId, type) => {
+  return http({
+    method: 'post',
+    url: '/v1_0/article/reports',
+    data: {
+      target: articleId,
+      type
+    }
+  })
+}

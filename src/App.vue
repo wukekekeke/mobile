@@ -19,12 +19,6 @@ export default {
 </script>
 
 <style lang="scss">
-#app{
-  .btn{
-    width: 100px;
-    height: 30px;
-  }
-}
 // 声明变量 （less中声明变量是@color）
 // $color:skyblue;
 // .one{

@@ -74,7 +74,7 @@ export default {
       }
       // 2) 如果有时间戳，拿之前的时间戳，发请求
       const res = await reqGetArticles(this.channel.id, this.timestamp)
-      console.log(res)
+      // console.log(res)
       // 保存后台返回的时间戳, 用于下一次请求
       this.timestamp = res.data.data.pre_timestamp
       // 通过...展开运算符，把请求结果追加到list中
