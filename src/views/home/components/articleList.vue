@@ -11,7 +11,11 @@
         @load="onLoad"
       >
         <!-- 展示大数，要配合toString() -->
-        <van-cell v-for="item in list" :key="item.art_id.toString()" :title="item.title">
+        <!-- 点击文章，跳转到文章详情页 -->
+        <van-cell v-for="item in list"
+          :key="item.art_id.toString()"
+          :title="item.title"
+          @click="$router.push('/articleDetail/'+item.art_id.toString())">
           <!-- 使用插槽（显示在下方） -->
           <template #label>
             <!-- 图片，展示使用宫格组件 -->
@@ -29,7 +33,7 @@
               <!-- 使用全局过滤器 -->
               <span>{{item.pubdate|relative}}</span>
               <!-- 只有登录的用户, 才能看见这个 x 按钮 -->
-              <span class="close" v-if="tokenInfo.token" @click="close(item)" >
+              <span class="close" v-if="tokenInfo.token" @click.stop="close(item)" >
                 <van-icon name="cross"></van-icon>
               </span>
             </div>

@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login'
 import Layout from '@/views/layout'
 import Search from '@/views/search'
+import SearchResult from '@/views/search/searchResult.vue'
+import ArticleDetail from '@/views/article/index.vue'
 // 二级路由
 import Home from '@/views/home'
 import Qusetion from '@/views/question'
@@ -17,6 +19,9 @@ const router = new VueRouter({
   routes: [
     { path: '/login', component: Login },
     { path: '/search', component: Search },
+    { path: '/searchResult', component: SearchResult },
+    // 如果路由状态要传ID，也可以用动态路由参数的方式
+    { path: '/articleDetail/:id', component: ArticleDetail },
     {
       path: '/',
       component: Layout,

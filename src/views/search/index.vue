@@ -36,7 +36,7 @@
       <van-cell title="历史记录">
         <van-button plain type="info"  size="mini" @click="clearHistory">清空</van-button>
       </van-cell>
-      <van-cell v-for="(item,index) in history" :key="index" :title="item" @click="clickHistory">
+      <van-cell v-for="(item,index) in history" :key="index" :title="item" @click="clickHistory(item)">
         <van-icon name="close" @click.stop="delHistory(index)"></van-icon>
       </van-cell>
     </van-cell-group>
@@ -77,14 +77,18 @@ export default {
     },
     // 点击搜索&点击联想推荐都是添加历史操作，都可以调用addHistory()
     // 点击搜索按钮
+    // 点击搜索按钮, 跳转到搜索结果页面，并传参
     clickSearch () {
       if (!this.keyword) return
       this.addHistory(this.keyword)
+      this.$router.push('/searchResult?keyword=' + this.keyword)
     },
     // 点击联想推荐
+    // 点击联想推荐, 跳转到搜索结果页面，并传参
     clickSuggestion (index) {
       this.addHistory(this.suggestion[index])
       // 通过下标从联想建议中拿
+      this.$router.push('/searchResult?keyword=' + this.suggestion[index])
     },
     // 添加历史
     addHistory (str) {
@@ -118,8 +122,10 @@ export default {
       this.history = []
     },
     // 点击历史中某一项, 也要更新历史
+    // 点击历史记录, 跳转到搜索结果页面，并传参
     clickHistory (item) {
       this.addHistory(item)
+      this.$router.push('/searchResult?keyword=' + item)
     }
   },
   computed: {

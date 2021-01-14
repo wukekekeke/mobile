@@ -1,5 +1,5 @@
 // 按需导入
-import { Button, NavBar, CellGroup, Field, Toast, Tabbar, TabbarItem, Icon, Tab, Tabs, List, Cell, Grid, GridItem, Image as VanImage, PullRefresh, Lazyload, Popup, ActionSheet, Search } from 'vant'
+import { Button, NavBar, CellGroup, Field, Toast, Tabbar, TabbarItem, Icon, Tab, Tabs, List, Cell, Grid, GridItem, Image as VanImage, PullRefresh, Lazyload, Popup, ActionSheet, Search, Loading, Divider } from 'vant'
 import Vue from 'vue'
 // 初始化
 Vue.use(Button)
@@ -22,3 +22,5 @@ Vue.use(Lazyload)
 Vue.use(Popup)
 Vue.use(ActionSheet)
 Vue.use(Search)
+Vue.use(Loading)
+Vue.use(Divider)

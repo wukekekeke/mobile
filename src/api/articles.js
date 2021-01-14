@@ -39,3 +39,68 @@ export const reqReportArticles = (articleId, type) => {
     }
   })
 }
+
+// 获取新闻文章详情
+export const reqGetArticleDetail = art_id => {
+  return http({
+    method: 'get',
+    url: '/v1_0/articles/' + art_id
+  })
+}
+
+// 取消关注用户
+export const reqUnFollowUser = (aut_id) => {
+  return http({
+    method: 'delete',
+    url: '/v1_0/user/followings/' + aut_id
+  })
+}
+
+// 关注用户
+export const reqFollowUser = (aut_id) => {
+  return http({
+    method: 'post',
+    url: '/v1_0/user/followings',
+    data: {
+      target: aut_id
+    }
+  })
+}
+
+// 对文章点赞
+export const reqAddLike = art_id => {
+  return http({
+    method: 'post',
+    url: '/v1_0/article/likings',
+    data: {
+      target: art_id
+    }
+  })
+}
+
+// 取消对文章点赞
+export const reqDeleteLike = art_id => {
+  return http({
+    method: 'delete',
+    url: '/v1_0/article/likings/' + art_id
+  })
+}
+
+// 对文章不喜欢
+export const reqAddDisLike = art_id => {
+  return http({
+    method: 'post',
+    url: '/v1_0/article/dislikes',
+    data: {
+      target: art_id
+    }
+  })
+}
+
+// 取消对文章不喜欢
+export const reqDeleteDisLike = art_id => {
+  return http({
+    method: 'delete',
+    url: '/v1_0/article/dislikes/' + art_id
+  })
+}

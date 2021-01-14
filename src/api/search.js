@@ -10,3 +10,14 @@ export const reqGetSuggestion = keyWord => {
     }
   })
 }
+// 获取搜索结果
+export const reqGetSearch = (keyWord, page) => {
+  return http({
+    method: 'get',
+    url: '/v1_0/search',
+    params: {
+      q: keyWord,
+      page
+    }
+  })
+}
