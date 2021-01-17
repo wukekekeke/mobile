@@ -51,3 +51,22 @@ export const reqAddCommentReply = (com_id, content, art_id) => {
     }
   })
 }
+
+// 对文章点赞
+export const reqAddCommentLike = com_id => {
+  return http({
+    method: 'post',
+    url: '/v1_0/article/likings',
+    data: {
+      target: com_id
+    }
+  })
+}
+
+// 取消对文章点赞
+export const reqDeleteCommentLike = com_id => {
+  return http({
+    method: 'delete',
+    url: '/v1_0/article/likings/' + com_id
+  })
+}

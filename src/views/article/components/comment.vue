@@ -27,7 +27,7 @@
             <van-button size="mini" type="default" @click="clickShowReply(item)">回复</van-button>
           </p>
         </div>
-        <van-icon slot="right-icon" name="like-o" />
+        <van-icon slot="right-icon" :name="item.is_like?'like':'like-o'" @click="toggleCommentLike"/>
       </van-cell>
     </van-list>
     <!-- 评论列表 -->
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { reqGetComments, reqAddComment } from '@/api/comment.js'
+import { reqGetComments, reqAddComment, reqAddCommentLike, reqDeleteCommentLike } from '@/api/comment.js'
 import CommentReply from './commentReply.vue'
 export default {
   name: 'ArticleComment',
@@ -125,6 +125,24 @@ export default {
       this.isShowReply = true
       // 把正在回复的评论，存到currentComment
       this.currentComment = item
+    },
+    // 切换评论的点赞
+    async toggleCommentLike (comment) {
+      try {
+        const commentId = comment.com_id.toString()
+        // 已经点赞，需要取消点赞
+        if (comment.is_liking) {
+          await reqDeleteCommentLike(commentId)
+        } else {
+          // 没有点赞，需要点赞
+          await reqAddCommentLike(commentId)
+        }
+        // 更改状态
+        comment.is_liking = !comment.is_liking
+        this.$toast.success('点赞切换成功')
+      } catch {
+        this.$toast.fail('操作失败')
+      }
     }
   }
 }
@@ -141,5 +159,11 @@ export default {
 // 给发表评论区空出地方
 .van-list {
   margin-bottom: 45px;
+}
+
+::v-deep {
+  i.van-icon-cross{
+    color: white;
+  }
 }
 </style>

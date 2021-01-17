@@ -107,7 +107,9 @@ export default {
       // 一个页面上只能有一个toast, 它会把上面的Loading状态覆盖掉
       this.$toast.success('登录成功')
       // 最后跳转
-      this.$router.push('/')
+      // this.$router.push('/')
+      // 更新跳转目标
+      this.$router.push(this.$route.query.backto || '/')
     },
     inp () {
       this.validate() // 在输入时调用验证

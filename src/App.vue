@@ -2,7 +2,14 @@
   <div id="app">
     <!-- <van-button class="btn" type="info" @click="req">测试发axios</van-button> -->
     <!-- <div class="one">学习scss sass所用</div> -->
-    <router-view/>
+
+    <!-- 组件缓存 -->
+    <!-- 需要缓存的 -->
+    <keep-alive>
+      <router-view v-if='$route.meta.isKeepAlive'></router-view>
+    </keep-alive>
+    <!-- 不需要缓存的 -->
+    <router-view v-if='!$route.meta.isKeepAlive'></router-view>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="articleList">
+  <div class="articleList" @scroll="scroll" ref='refScroll'>
     <!-- <p>文章列表组件 - {{ channel }} - {{ Math.random() }}</p> -->
     <!-- 下拉刷新 -->
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
@@ -65,10 +65,15 @@ export default {
       finished: false, // 所有的数据是否都已经加载完成
       // true 没有数据可以加载了——》“没有更多了”，这用户再怎么触底，都不会再有数据了
       timestamp: null, // 时间戳
-      refreshing: false // 是否在下拉刷新中
+      refreshing: false, // 是否在下拉刷新中
+      scrollTop: 0 // 滚动条的位置
     }
   },
   methods: {
+    scroll (e) {
+      // 记录当前滚动条的位置
+      this.scrollTop = e.target.scrollTop
+    },
     async onLoad () {
       // 异步更新数据
       console.log('当前数据的条数', this.list.length)
@@ -129,12 +134,19 @@ export default {
       console.log('是我频道中的文章，需要找到文章id并删除')
       this.list = this.list.filter(item => item.art_id.toString() !== ArticleId)
     })
+  },
+  // 如果对于组件采用了缓存 <keep-alive>，则会用到两个生命周期钩子函数：activated, deactivated
+  // 当articleList.vue激活时，恢复滚动条的距离
+  activated () {
+    this.$refs.refScroll.scrollTop = this.scrollTop
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .articleList {
+  height: 100%;
+  overflow: auto;
   .meta {
     width: 100%;
     span {

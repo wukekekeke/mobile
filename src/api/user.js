@@ -39,3 +39,29 @@ export const reqProfile = () => {
     // }
   })
 }
+
+// 获取用户自己信息
+export const reqGetUserInfo = () => {
+  return http({
+    method: 'get',
+    url: '/v1_0/user'
+  })
+}
+
+// 修改用户个人信息
+export const reqUpdateUserInfo = (obj) => {
+  return http({
+    method: 'patch',
+    url: '/v1_0/user/profile',
+    data: obj
+  })
+}
+
+// 编辑用户照片资料
+export const reqUpdatePhoto = (formData) => {
+  return http({
+    method: 'patch',
+    url: '/v1_0/user/photo',
+    data: formData
+  })
+}

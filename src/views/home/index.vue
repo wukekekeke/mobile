@@ -173,7 +173,7 @@ export default {
         //  内部滚动容器 （每个tab下的容器都有自己的滚动条）
         .van-tab__pane{
           height: 100%;
-          overflow: auto; // 滚动条
+          // overflow: auto; // 滚动条
         }
       }
     }
